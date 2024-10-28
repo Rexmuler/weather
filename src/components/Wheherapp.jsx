@@ -7,7 +7,6 @@ const Weather = () => {
   const [suggestions, setSuggestions] = useState([]);
   const API_KEY = "72de98c6b61d42fbb8380910242610";
 
-  // Sample list of cities for autocomplete. You can expand this list or use an external data source.
   const cityList = [
     "London",
     "Los Angeles",
@@ -30,7 +29,7 @@ const Weather = () => {
         }
       );
       setWeather(response.data);
-      setSuggestions([]); // Clear suggestions after search
+      setSuggestions([]);
     } catch (error) {
       alert("City not found!");
       setWeather(null);
@@ -56,6 +55,12 @@ const Weather = () => {
     setSuggestions([]);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      fetchWeather();
+    }
+  };
+
   return (
     <div className="container mt-5">
       <h1 className="text-center mb-4">Weather App</h1>
@@ -66,6 +71,7 @@ const Weather = () => {
           placeholder="Enter city name"
           value={city}
           onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
           required
         />
         <button className="btn btn-primary ms-3" onClick={fetchWeather}>
